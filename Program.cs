@@ -1,7 +1,18 @@
+using DTS_Tugas6.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add database context
+builder.Services.AddDbContext<DatabaseContext>(optionsBuilder =>
+{
+    optionsBuilder
+        .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .UseSnakeCaseNamingConvention();
+});
 
 var app = builder.Build();
 
