@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTS_Tugas6", "DTS_Tugas6.csproj", "{0623F4D1-2CE4-43C2-BD57-A8188EA673BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0623F4D1-2CE4-43C2-BD57-A8188EA673BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0623F4D1-2CE4-43C2-BD57-A8188EA673BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0623F4D1-2CE4-43C2-BD57-A8188EA673BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0623F4D1-2CE4-43C2-BD57-A8188EA673BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
