@@ -2,12 +2,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DTS_Tugas6.Repositories;
 
-public abstract class EFCoreRepository<TPk, T> : IBaseRepository<TPk, T>
+public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, T>
     where T : class
+    where TContext : DbContext
 {
-    private readonly DbContext _context;
+    private readonly TContext _context;
 
-    protected EFCoreRepository(DbContext context)
+    protected EFCoreRepository(TContext context)
     {
         _context = context;
     }

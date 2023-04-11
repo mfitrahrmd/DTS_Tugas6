@@ -1,11 +1,12 @@
+using DTS_Tugas6.Data;
 using DTS_Tugas6.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DTS_Tugas6.Repositories.mssql;
 
-public class AccountRoleRepository : EFCoreRepository<int, AccountRole>
+public class AccountRoleRepository : EFCoreRepository<int, AccountRole, DatabaseContext>
 {
-    public AccountRoleRepository(DbContext context) : base(context)
+    public AccountRoleRepository(DatabaseContext context) : base(context)
     {
     }
 }
