@@ -1,3 +1,4 @@
+using DTS_Tugas6.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DTS_Tugas6.Repositories;
@@ -31,16 +32,36 @@ public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, 
         return await _context.Set<T>().FindAsync(pk);
     }
 
+    private async Task<T?> FindOneByPkAsNoTracking(TPk pk)
+    {
+        var foundEntity = await _context.Set<T>().FindAsync(pk);
+        _context.Entry(foundEntity).State = EntityState.Detached;
+
+        return foundEntity;
+    }
+
     public async Task<T?> DeleteOneByPk(TPk pk)
     {
-        var entity = await _context.Set<T>().FindAsync(pk);
+        var foundEntity = await FindOneByPkAsNoTracking(pk);
 
-        if (entity is null)
-        {
-            return entity;
-        }
+        if (foundEntity is null)
+            return foundEntity;
 
-        _context.Set<T>().Remove(entity);
+        _context.Set<T>().Remove(foundEntity);
+
+        await _context.SaveChangesAsync();
+
+        return foundEntity;
+    }
+
+    public async Task<T?> UpdateOneByPk(TPk pk, T entity)
+    {
+        var foundEntity = await FindOneByPkAsNoTracking(pk);
+
+        if (foundEntity is null)
+            return foundEntity;
+        
+        _context.Set<T>().Update(entity);
 
         await _context.SaveChangesAsync();
 
