@@ -16,7 +16,7 @@ public class AccountRole
     [ForeignKey(nameof(Role))]
     public int RoleId { get; set; }
     
-    public Account Account { get; set; }
+    public Account? Account { get; set; }
     
-    public Role Role { get; set; }
+    public Role? Role { get; set; }
 }

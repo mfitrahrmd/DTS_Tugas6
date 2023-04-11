@@ -12,5 +12,5 @@ public class Role
     [Column(TypeName = "varchar(50)")]
     public string Name { get; set; }
     
-    public ICollection<AccountRole> AccountsRoles { get; set; }
+    public ICollection<AccountRole>? AccountsRoles { get; set; }
 }

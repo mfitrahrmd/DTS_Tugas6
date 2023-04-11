@@ -21,7 +21,7 @@ public class Education
     [ForeignKey(nameof(Models.University))]
     public int UniversityId { get; set; }
     
-    public University University { get; set; }
+    public University? University { get; set; }
     
-    public Profiling Profiling { get; set; }
+    public Profiling? Profiling { get; set; }
 }
