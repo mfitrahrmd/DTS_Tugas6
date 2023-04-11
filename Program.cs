@@ -1,4 +1,6 @@
 using DTS_Tugas6.Data;
+using DTS_Tugas6.Repositories;
+using DTS_Tugas6.Repositories.mssql;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<DatabaseContext>(optionsBuilder =>
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         .UseSnakeCaseNamingConvention();
 });
+
+// Add DI
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 
 var app = builder.Build();
 
