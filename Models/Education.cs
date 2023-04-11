@@ -15,8 +15,8 @@ public class Education
     [Column(TypeName = "varchar(10)")]
     public string Degree { get; set; }
     
-    [Column(TypeName = "varchar(5)")]
-    public string Gpa { get; set; }
+    [Column(TypeName = "decimal(3,2)")]
+    public double GPA { get; set; }
     
     [ForeignKey(nameof(Models.University))]
     public int UniversityId { get; set; }
