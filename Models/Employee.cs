@@ -11,7 +11,8 @@ namespace DTS_Tugas6.Models;
 [Table("TB_M_Employees")]
 public class Employee
 {
-    [Column(TypeName = "char(5)")] [Key]
+    [Column(TypeName = "char(5)")]
+    [Key]
     public string Nik { get; set; }
 
     [Column(TypeName = "varchar(50)")]
