@@ -21,7 +21,7 @@ public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, 
         return entity;
     }
 
-    public async Task<List<T>> FindAll()
+    public async Task<IEnumerable<T>> FindAll()
     {
         return await _context.Set<T>().ToListAsync();
     }
