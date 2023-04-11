@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DTS_Tugas6.Repositories.mssql;
 
-public class AccountRepository : EFCoreRepository<string, Account, DatabaseContext>
+public class AccountRepository : EFCoreRepository<string, Account, DatabaseContext>, IAccountRepository
 {
     public AccountRepository(DatabaseContext context) : base(context)
     {
