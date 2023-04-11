@@ -12,6 +12,8 @@ public class UniversityRepository : EFCoreRepository<int, University, DatabaseCo
 
     public IEnumerable<University> FindManyContainsName(string name)
     {
-        return _context.Set<University>().Where(u => u.Name.Contains(name));
+        return from u in _context.Set<University>()
+            where u.Name.Contains(name)
+            select u;
     }
 }
