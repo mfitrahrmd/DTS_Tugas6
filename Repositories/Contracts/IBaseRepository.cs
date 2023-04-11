@@ -6,4 +6,5 @@ public interface IBaseRepository<TPk, T> where T : class
     Task<IEnumerable<T>> FindAll();
     Task<T?> FindOneByPk(TPk pk);
     Task<T?> DeleteOneByPk(TPk pk);
+    Task<T?> UpdateOneByPk(TPk pk, T entity);
 }
