@@ -6,7 +6,7 @@ public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, 
     where T : class
     where TContext : DbContext
 {
-    private readonly TContext _context;
+    protected readonly TContext _context;
 
     protected EFCoreRepository(TContext context)
     {
