@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using DTS_Tugas6.Data;
 using DTS_Tugas6.Models;
 using DTS_Tugas6.Repositories;
+using DTS_Tugas6.Repositories.Implementations;
+using DTS_Tugas6.ViewModels;
 
 namespace DTS_Tugas6.Controllers
 {
@@ -125,6 +127,68 @@ namespace DTS_Tugas6.Controllers
                 _accountRepository.DeleteOneByPk(id);
             
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("Register")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(RegisterVM registerVm)
+        {
+            // check if given nik is unique
+            if (_employeeRepository.FindOneByPk(registerVm.Nik) is not null)
+            {
+                ModelState.AddModelError(nameof(RegisterVM.Nik), "This Nik is not available. Please use another Nik");
+
+                return View();
+            }
+
+            // check if given email is unique
+            if (_employeeRepository.FindOneByEmail(registerVm.Email) is not null)
+            {
+                ModelState.AddModelError(nameof(RegisterVM.Email), "This Email is not available. Please use another Email");
+
+                return View();
+            }
+            
+            var registeredVm = _accountRepository.Register(registerVm);
+            
+            if (registeredVm is not null)
+                return RedirectToAction(nameof(Login));
+
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("Login")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginVM loginVm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var isValid = _accountRepository.Login(loginVm);
+
+                    if (isValid)
+                        return RedirectToAction("Index", "Home");
+                }
+                catch (RepositoryException re)
+                {
+                    ModelState.AddModelError(re.Field, re.Message);
+
+                    return View();
+                }
+            }
+            
+            return View(loginVm);
         }
     }
 }
