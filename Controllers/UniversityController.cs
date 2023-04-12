@@ -14,64 +14,64 @@ public class UniversityController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var universities = await _universityRepository.FindAll();
+        var universities = _universityRepository.FindAll();
 
         return View(universities);
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public IActionResult Details(int id)
     {
-        var university = await _universityRepository.FindOneByPk(id);
+        var university = _universityRepository.FindOneByPk(id);
 
         return View(university);
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(University university)
+    public IActionResult Create(University university)
     {
-        await _universityRepository.InsertOne(university);
+        _universityRepository.InsertOne(university);
 
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(int id)
+    public IActionResult Edit(int id)
     {
-        var university = await _universityRepository.FindOneByPk(id);
+        var university = _universityRepository.FindOneByPk(id);
 
         return View(university);
     }
     
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, University university)
+    public IActionResult Edit(int id, University university)
     {
-        await _universityRepository.UpdateOneByPk(id, university);
+        _universityRepository.UpdateOneByPk(id, university);
 
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public async Task<IActionResult> ConfirmDelete(int id)
+    public IActionResult ConfirmDelete(int id)
     {
-        var university = await _universityRepository.FindOneByPk(id);
+        var university = _universityRepository.FindOneByPk(id);
 
         return View(university);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Delete(int id)
+    public IActionResult Delete(int id)
     {
-        await _universityRepository.DeleteOneByPk(id);
+        _universityRepository.DeleteOneByPk(id);
 
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 }
