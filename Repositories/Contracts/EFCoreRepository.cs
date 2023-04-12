@@ -1,7 +1,6 @@
-using DTS_Tugas6.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DTS_Tugas6.Repositories;
+namespace DTS_Tugas6.Repositories.Contracts;
 
 public abstract class EFCoreRepository<TPk, TEntity, TContext> : IBaseRepository<TPk, TEntity>
     where TEntity : class
