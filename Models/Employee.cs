@@ -33,9 +33,9 @@ public class Employee
     [Column(TypeName = "varchar(20)")]
     public string? PhoneNumber { get; set; }
     
-    public Profiling? Profiling { get; set; }
+    public virtual Profiling? Profiling { get; set; }
     
-    public Account? Account { get; set; }
+    public virtual Account? Account { get; set; }
 }
 
 public enum Gender

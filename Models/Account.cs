@@ -14,7 +14,7 @@ public class Account
     [Column(TypeName = "varchar(255)")]
     public string Password { get; set; }
     
-    public Employee? Employee { get; set; }
+    public virtual Employee? Employee { get; set; }
     
-    public ICollection<AccountRole>? AccountRoles { get; set; }
+    public virtual ICollection<AccountRole>? AccountRoles { get; set; }
 }

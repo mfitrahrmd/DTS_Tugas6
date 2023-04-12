@@ -13,7 +13,7 @@ public class Profiling
     [ForeignKey(nameof(Models.Education))]
     public int EducationId { get; set; }
     
-    public Education? Education { get; set; }
+    public virtual Education? Education { get; set; }
     
-    public Employee? Employee { get; set; }
+    public virtual Employee? Employee { get; set; }
 }

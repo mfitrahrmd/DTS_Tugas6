@@ -12,5 +12,5 @@ public class University
     [Column(TypeName = "varchar(100)")]
     public string Name { get; set; }
     
-    public ICollection<Education>? Educations { get; set; }
+    public virtual ICollection<Education>? Educations { get; set; }
 }
