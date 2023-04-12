@@ -27,7 +27,7 @@ public class DatabaseContext : DbContext
             .WithOne(ar => ar.Account)
             .HasForeignKey(ar => ar.AccountNik)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         // Role --‡ AccountRoles
         modelBuilder.Entity<Role>()
             .HasMany<AccountRole>(r => r.AccountsRoles)
@@ -61,21 +61,21 @@ public class DatabaseContext : DbContext
         // Profiling -- Employee
         modelBuilder.Entity<Profiling>()
             .HasKey(p => p.EmployeeNik);
-        
+
         // Employee -- Profiling
         modelBuilder.Entity<Employee>()
             .HasOne<Profiling>(e => e.Profiling)
             .WithOne(p => p.Employee);
-        
+
         // Profiling -- Education
         modelBuilder.Entity<Profiling>()
             .HasKey(p => p.EmployeeNik);
-        
+
         // Education -- Profiling
         modelBuilder.Entity<Education>()
             .HasOne<Profiling>(e => e.Profiling)
             .WithOne(p => p.Education);
-        
+
         // University --‡ Education
         modelBuilder.Entity<University>()
             .HasMany<Education>(u => u.Educations)
@@ -89,5 +89,19 @@ public class DatabaseContext : DbContext
             .WithMany(u => u.Educations)
             .HasForeignKey(e => e.UniversityId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        // Roles seed data
+        modelBuilder.Entity<Role>()
+            .HasData(
+                new Role
+                {
+                    Id = -1,
+                    Name = "User"
+                },
+                new Role
+                {
+                    Id = -2,
+                    Name = "Admin"
+                });
     }
 }
