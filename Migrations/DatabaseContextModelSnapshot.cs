@@ -36,7 +36,7 @@ namespace DTSTugas6.Migrations
                     b.HasKey("EmployeeNik")
                         .HasName("pk_tb_m_accounts");
 
-                    b.ToTable("TB_M_Accounts");
+                    b.ToTable("TB_M_Accounts", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.AccountRole", b =>
@@ -66,7 +66,7 @@ namespace DTSTugas6.Migrations
                     b.HasIndex("RoleId")
                         .HasDatabaseName("ix_tb_tr_account_roles_role_id");
 
-                    b.ToTable("TB_TR_Account_Roles");
+                    b.ToTable("TB_TR_Account_Roles", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.Education", b =>
@@ -102,7 +102,7 @@ namespace DTSTugas6.Migrations
                     b.HasIndex("UniversityId")
                         .HasDatabaseName("ix_tb_m_educations_university_id");
 
-                    b.ToTable("TB_M_Educations");
+                    b.ToTable("TB_M_Educations", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.Employee", b =>
@@ -153,7 +153,7 @@ namespace DTSTugas6.Migrations
                         .HasDatabaseName("ix_tb_m_employees_phone_number")
                         .HasFilter("[phone_number] IS NOT NULL");
 
-                    b.ToTable("TB_M_Employees");
+                    b.ToTable("TB_M_Employees", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.Profiling", b =>
@@ -173,7 +173,7 @@ namespace DTSTugas6.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_tb_tr_profilings_education_id");
 
-                    b.ToTable("TB_TR_Profilings");
+                    b.ToTable("TB_TR_Profilings", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.Role", b =>
@@ -193,7 +193,7 @@ namespace DTSTugas6.Migrations
                     b.HasKey("Id")
                         .HasName("pk_tb_m_roles");
 
-                    b.ToTable("TB_M_Roles");
+                    b.ToTable("TB_M_Roles", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.University", b =>
@@ -213,7 +213,7 @@ namespace DTSTugas6.Migrations
                     b.HasKey("Id")
                         .HasName("pk_tb_m_universities");
 
-                    b.ToTable("TB_M_Universities");
+                    b.ToTable("TB_M_Universities", (string)null);
                 });
 
             modelBuilder.Entity("DTS_Tugas6.Models.Account", b =>
