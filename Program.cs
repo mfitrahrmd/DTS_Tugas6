@@ -1,5 +1,6 @@
 using DTS_Tugas6.Data;
 using DTS_Tugas6.Repositories;
+using DTS_Tugas6.Repositories.Implementations;
 using DTS_Tugas6.Repositories.mssql;
 using Microsoft.EntityFrameworkCore;
 
