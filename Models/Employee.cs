@@ -15,9 +15,11 @@ public class Employee
     [Key]
     public string Nik { get; set; }
 
+    [Display(Name = "First Name")]
     [Column(TypeName = "varchar(50)")]
     public string FirstName { get; set; }
 
+    [Display(Name = "Last Name")]
     [Column(TypeName = "varchar(50)")]
     public string? LastName { get; set; }
 
@@ -25,11 +27,13 @@ public class Employee
 
     public Gender Gender { get; set; }
 
+    [Display(Name = "Hiring Date")]
     public DateTime HiringDate { get; set; }
 
     [Column(TypeName = "varchar(50)")]
     public string Email { get; set; }
 
+    [Display(Name = "Phone Number")]
     [Column(TypeName = "varchar(20)")]
     public string? PhoneNumber { get; set; }
     
