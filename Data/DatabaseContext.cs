@@ -69,7 +69,7 @@ public class DatabaseContext : DbContext
         
         // Profiling -- Education
         modelBuilder.Entity<Profiling>()
-            .HasKey(p => p.EducationId);
+            .HasKey(p => p.EmployeeNik);
         
         // Education -- Profiling
         modelBuilder.Entity<Education>()
