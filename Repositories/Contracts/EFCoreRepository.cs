@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DTS_Tugas6.Repositories;
 
-public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, T>
-    where T : class
+public abstract class EFCoreRepository<TPk, TEntity, TContext> : IBaseRepository<TPk, TEntity>
+    where TEntity : class
     where TContext : DbContext
 {
     protected readonly TContext _context;
@@ -14,56 +14,56 @@ public abstract class EFCoreRepository<TPk, T, TContext> : IBaseRepository<TPk, 
         _context = context;
     }
 
-    public async Task<T> InsertOne(T entity)
+    public TEntity InsertOne(TEntity entity)
     {
-        _context.Set<T>().Add(entity);
-        await _context.SaveChangesAsync();
+        _context.Set<TEntity>().Add(entity);
+        _context.SaveChanges();
 
         return entity;
     }
 
-    public async Task<IEnumerable<T>> FindAll()
+    public IEnumerable<TEntity> FindAll()
     {
-        return await _context.Set<T>().ToListAsync();
+        return _context.Set<TEntity>().ToList();
     }
 
-    public async Task<T?> FindOneByPk(TPk pk)
+    public TEntity? FindOneByPk(TPk pk)
     {
-        return await _context.Set<T>().FindAsync(pk);
+        return _context.Set<TEntity>().Find(pk);
     }
 
-    private async Task<T?> FindOneByPkAsNoTracking(TPk pk)
+    private TEntity? FindOneByPkAsNoTracking(TPk pk)
     {
-        var foundEntity = await _context.Set<T>().FindAsync(pk);
+        var foundEntity = _context.Set<TEntity>().Find(pk);
         _context.Entry(foundEntity).State = EntityState.Detached;
 
         return foundEntity;
     }
 
-    public async Task<T?> DeleteOneByPk(TPk pk)
+    public TEntity? DeleteOneByPk(TPk pk)
     {
-        var foundEntity = await FindOneByPkAsNoTracking(pk);
+        var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
             return foundEntity;
 
-        _context.Set<T>().Remove(foundEntity);
+        _context.Set<TEntity>().Remove(foundEntity);
 
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
 
         return foundEntity;
     }
 
-    public async Task<T?> UpdateOneByPk(TPk pk, T entity)
+    public TEntity? UpdateOneByPk(TPk pk, TEntity entity)
     {
-        var foundEntity = await FindOneByPkAsNoTracking(pk);
+        var foundEntity = FindOneByPkAsNoTracking(pk);
 
         if (foundEntity is null)
             return foundEntity;
         
-        _context.Set<T>().Update(entity);
+        _context.Set<TEntity>().Update(entity);
 
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
 
         return entity;
     }
