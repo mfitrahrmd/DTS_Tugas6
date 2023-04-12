@@ -50,7 +50,7 @@ public class UniversityController : Controller
 
         return View(university);
     }
-    
+
     [HttpPost]
     public IActionResult Edit(int id, University university)
     {
@@ -59,18 +59,26 @@ public class UniversityController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet]
-    public IActionResult ConfirmDelete(int id)
+    // GET: University/Delete/5
+    public IActionResult Delete(int id)
     {
         var university = _universityRepository.FindOneByPk(id);
+
+        if (university is null)
+            return NotFound();
 
         return View(university);
     }
 
-    [HttpPost]
-    public IActionResult Delete(int id)
+    // POST: University/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
     {
-        _universityRepository.DeleteOneByPk(id);
+        var university = _universityRepository.FindOneByPk(id);
+
+        if (university is not null)
+            _universityRepository.DeleteOneByPk(id);
 
         return RedirectToAction(nameof(Index));
     }
