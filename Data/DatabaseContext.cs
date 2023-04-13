@@ -1,5 +1,6 @@
 using DTS_Tugas6.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DTS_Tugas6.Data;
 
