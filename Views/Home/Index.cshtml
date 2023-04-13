@@ -1,12 +1,11 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome @(HttpContextAccessor.HttpContext.Session.GetString("_logged_user_fullName") ?? "Guest")</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <div class="col col-4 m-auto d-flex justify-content-evenly">
-        <a type="button" class="btn btn-outline-primary" asp-controller="Account" asp-action="Register">Register</a>
-        <a type="button" class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Login</a>
-    </div>
 </div>
