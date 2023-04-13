@@ -18,6 +18,15 @@ builder.Services.AddDbContext<DatabaseContext>(optionsBuilder =>
         .UseSnakeCaseNamingConvention();
 });
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Add DI
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
@@ -26,6 +35,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IProfilingRepository, ProfilingRepository>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -43,6 +53,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
