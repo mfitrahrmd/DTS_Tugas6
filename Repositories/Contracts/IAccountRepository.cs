@@ -6,6 +6,6 @@ namespace DTS_Tugas6.Repositories;
 public interface IAccountRepository : IBaseRepository<string, Account>
 {
     RegisterVM? Register(RegisterVM registerVm);
-    bool Login(LoginVM loginVm);
+    Account? Login(LoginVM loginVm);
     
 }

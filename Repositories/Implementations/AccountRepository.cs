@@ -107,19 +107,13 @@ public class AccountRepository : EFCoreRepository<string, Account, DatabaseConte
         return registerVm;
     }
 
-    public bool Login(LoginVM loginVm)
+    public Account? Login(LoginVM loginVm)
     {
-        var employee = _context.Set<Employee>().FirstOrDefault(e => e.Email.Equals(loginVm.Email));
+        var account = _context.Set<Account>().FirstOrDefault(a => a.Employee != null && a.Employee.Email.Equals(loginVm.Email));
 
-        if (employee is null)
+        if (account is null)
             throw new RepositoryException("Account was not found with given email", nameof(loginVm.Email));
 
-        if (employee.Account is null)
-            throw new NullReferenceException("Employee account is null");
-
-        if (!employee.Account.Password.Equals(loginVm.Password))
-            throw new RepositoryException("Invalid password", nameof(loginVm.Password));
-
-        return true;
+        return account;
     }
 }
