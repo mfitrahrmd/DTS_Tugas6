@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
       <PackageReference Include="EFCore.NamingConventions" Version="7.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
@@ -35,6 +36,10 @@
       <_ContentIncludedByDefault Remove="Views\Employee\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Employee\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Employee\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Utils" />
     </ItemGroup>
 
 </Project>
