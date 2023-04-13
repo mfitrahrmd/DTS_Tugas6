@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -47,6 +50,17 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Profiling" asp-action="Index">Profiling</a>
                     </li>
                 </ul>
+                <div>
+                    <a type="button" class="btn btn-outline-primary" asp-controller="Account" asp-action="Register">Register</a>
+                            @if (@HttpContextAccessor.HttpContext.Session.GetString("_logged_user_fullName") is null)
+                            {
+                                <a type="button" class="btn btn-outline-info" asp-controller="Account" asp-action="Login">Login</a>
+                            }
+                            else
+                            {
+                                <a type="button" class="btn btn-outline-danger" asp-controller="Account" asp-action="Logout">Logout</a>
+                            }
+                </div>
             </div>
         </div>
     </nav>
