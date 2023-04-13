@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DTS_Tugas6.Data;
 using DTS_Tugas6.Models;
 using DTS_Tugas6.Repositories;
 using DTS_Tugas6.Repositories.Implementations;
@@ -28,7 +23,7 @@ namespace DTS_Tugas6.Controllers
         public IActionResult Index()
         {
             var accounts = _accountRepository.FindAll();
-            
+
             return View(accounts);
         }
 
@@ -36,7 +31,7 @@ namespace DTS_Tugas6.Controllers
         public IActionResult Details(string id)
         {
             var account = _accountRepository.FindOneByPk(id);
-            
+
             if (account is null)
                 return NotFound();
 
@@ -47,7 +42,7 @@ namespace DTS_Tugas6.Controllers
         public IActionResult Create()
         {
             ViewData["EmployeeNik"] = new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName");
-            
+
             return View();
         }
 
@@ -61,12 +56,13 @@ namespace DTS_Tugas6.Controllers
             if (ModelState.IsValid)
             {
                 _accountRepository.InsertOne(account);
-                
+
                 return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["EmployeeNik"] = new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
-            
+
+            ViewData["EmployeeNik"] =
+                new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
+
             return View(account);
         }
 
@@ -74,12 +70,13 @@ namespace DTS_Tugas6.Controllers
         public IActionResult Edit(string id)
         {
             var account = _accountRepository.FindOneByPk(id);
-            
+
             if (account is null)
                 return NotFound();
-            
-            ViewData["EmployeeNik"] = new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
-            
+
+            ViewData["EmployeeNik"] =
+                new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
+
             return View(account);
         }
 
@@ -96,12 +93,13 @@ namespace DTS_Tugas6.Controllers
             if (ModelState.IsValid)
             {
                 _accountRepository.UpdateOneByPk(id, account);
-                
+
                 return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["EmployeeNik"] = new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
-            
+
+            ViewData["EmployeeNik"] =
+                new SelectList(_employeeRepository.FindAll(), "Nik", "FirstName", account.EmployeeNik);
+
             return View(account);
         }
 
@@ -109,7 +107,7 @@ namespace DTS_Tugas6.Controllers
         public IActionResult Delete(string id)
         {
             var account = _accountRepository.FindOneByPk(id);
-            
+
             if (account is null)
                 return NotFound();
 
@@ -125,7 +123,7 @@ namespace DTS_Tugas6.Controllers
 
             if (account is not null)
                 _accountRepository.DeleteOneByPk(id);
-            
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -149,13 +147,17 @@ namespace DTS_Tugas6.Controllers
             // check if given email is unique
             if (_employeeRepository.FindOneByEmail(registerVm.Email) is not null)
             {
-                ModelState.AddModelError(nameof(RegisterVM.Email), "This Email is not available. Please use another Email");
+                ModelState.AddModelError(nameof(RegisterVM.Email),
+                    "This Email is not available. Please use another Email");
 
                 return View();
             }
-            
+
+            registerVm.Password =
+                BCrypt.Net.BCrypt.HashPassword(registerVm.Password);
+
             var registeredVm = _accountRepository.Register(registerVm);
-            
+
             if (registeredVm is not null)
                 return RedirectToAction(nameof(Login));
 
@@ -175,10 +177,25 @@ namespace DTS_Tugas6.Controllers
             {
                 try
                 {
-                    var isValid = _accountRepository.Login(loginVm);
+                    var account = _accountRepository.Login(loginVm);
 
-                    if (isValid)
+                    if (account is not null)
+                    {
+                        if (account.Employee != null)
+                        {
+                            if (!BCrypt.Net.BCrypt.Verify(loginVm.Password, account.Password))
+                            {
+                                ModelState.AddModelError(nameof(LoginVM.Password), "Invalid password");
+
+                                return View();
+                            }
+                                
+                            HttpContext.Session.Set("_logged_user_fullName",
+                                Encoding.UTF8.GetBytes($"{account.Employee.FirstName} {account.Employee.LastName}"));
+                        }
+
                         return RedirectToAction("Index", "Home");
+                    }
                 }
                 catch (RepositoryException re)
                 {
@@ -187,8 +204,15 @@ namespace DTS_Tugas6.Controllers
                     return View();
                 }
             }
-            
+
             return View(loginVm);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("_logged_user_fullName");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
